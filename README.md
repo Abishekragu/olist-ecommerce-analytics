@@ -90,7 +90,7 @@ The model includes active relationships between transactional and supporting ana
 
 ### Power BI Data Model
 
-![Power BI Data Model](Images/Data_Model_Relationship.png)
+![Power BI Data Model](Images/Data_Model_Relationships.png)
 
 ### Relationship Details
 
@@ -206,3 +206,13 @@ Power BI Visualizations
 Dashboard Review & Validation
         ↓
 Portfolio Documentation
+
+---
+
+## Author
+
+**Abishek Ragu**  
+Aspiring Data Analyst | Power BI | SQL | Excel
+
+[GitHub Profile](https://github.com/Abishekragu)  
+[LinkedIn Profile](https://www.linkedin.com/in/rabishekragu23/)
