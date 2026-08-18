@@ -1,228 +1,363 @@
-# Olist E-Commerce Sales & Customer Analytics Dashboard
+# Olist Brazilian E-Commerce Analytics
 
-A Power BI business intelligence project analyzing the Brazilian Olist e-commerce marketplace to understand sales performance, customer behavior, product and seller performance, and delivery operations.
+**Power BI · DAX · Excel · Business Analytics**
+
+An end-to-end business analytics project using the **Brazilian E-Commerce Public Dataset by Olist**, developed to evaluate marketplace performance across sales, customers, products, sellers, delivery operations, customer reviews, and repeat purchasing.
+
+The project follows a structured analytics workflow from **data auditing and transformation through data modeling, DAX measure development, dashboard design, validation, and portfolio documentation**.
 
 ---
 
 ## Project Overview
 
-This project was developed as a practical data analytics portfolio project using the Brazilian E-Commerce Public Dataset by Olist.
+The objective was to turn a multi-table e-commerce dataset into a controlled analytical model and business-focused Power BI dashboard.
 
-The objective was to transform raw e-commerce data into an interactive Power BI dashboard that provides a structured view of commercial performance, customer behavior, and delivery operations.
+Rather than beginning with visualizations, the project first established:
 
-The analysis is organized into three dashboard pages:
+* Data quality and table-grain integrity
+* Business questions and metric definitions
+* Data cleaning and transformation rules
+* Analytical table design
+* Power BI relationships and model validation
+* DAX measures and KPI validation
+* Dashboard structure and visual QA
 
-1. Executive Overview
-2. Sales & Customer Analysis
-3. Operations & Delivery Analysis
-
-The project covers the complete analytical workflow from data preparation and transformation through data modeling, calculated measures, visualization, and business interpretation.
+The final dashboard was designed around **12 approved business questions** and organized into three analytical pages.
 
 ---
 
-## Business Objective
+## Business Questions
 
-The purpose of the analysis is to provide a consolidated view of Olist's marketplace performance and identify areas that may require business attention.
+The analysis was structured around the following approved questions.
 
-The dashboard focuses on questions such as:
+### Sales & Marketplace Performance
 
-- How are overall sales and order volumes performing?
-- How do sales and orders change over time?
-- Which payment methods are most frequently used?
-- What proportion of customers are repeat customers?
-- Which states generate the highest sales and order volumes?
-- Which states have higher average order values?
-- Which product categories receive lower review scores?
-- How does seller sales performance relate to late delivery rates?
-- Which states experience higher late-delivery rates?
-- How severe are late-order delays?
-- How does delivery performance change over time?
-- Which states have higher average delivery delays?
-- Is there a relationship between order volume and delivery delays?
+**Q1.** How are order volume and sales value changing over time?
+
+**Q2.** Which product categories contribute the most sales value and unique orders?
+
+**Q3.** Which customer states contribute the most sales value and unique orders?
+
+**Q4.** Which sellers have high sales contribution, and how does their delivery/customer experience compare?
+
+### Delivery & Operational Performance
+
+**Q5.** What is the typical customer delivery time, and how does it vary?
+
+**Q6.** What percentage of delivered orders miss the estimated delivery date, and by how much?
+
+**Q7.** Which factors are associated with higher late-delivery rates?
+
+### Customer Experience
+
+**Q8.** Is late delivery associated with lower customer review scores?
+
+**Q9.** Which product categories are associated with lower customer review scores?
+
+**Q11.** What proportion of customers made repeat purchases during the observed period?
+
+### Supporting & Synthesis Analysis
+
+**Q10.** How do customers use different payment methods and installment options?
+
+**Q12.** Which high-sales sellers or categories show weaker delivery or customer-experience performance?
+
+Q10 was classified as **low priority**, while the core analytical focus was placed on sales, delivery, late delivery, customer experience, repeat purchasing, and high-sales/weak-performance areas.
 
 ---
 
 ## Dataset
 
-The project uses the **Brazilian E-Commerce Public Dataset by Olist**, obtained from Kaggle.
+**Source:** Brazilian E-Commerce Public Dataset by Olist
 
-**Source:** [Kaggle — Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+The dataset contains multiple related tables covering customers, orders, order items, payments, reviews, products, sellers, geolocation, and category translation.
 
-The dataset contains multiple related tables covering:
+**Source:** [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
 
-- Customers
-- Orders
-- Order Items
-- Payments
-- Reviews
-- Products
-- Sellers
-- Product Category Translations
-- Geolocation
+The original raw source files were retained separately during the project. The cleaned analytical workbook and raw CSV files are **not hosted in this repository**; the repository focuses on the analytical output and portfolio documentation.
 
-The raw data was prepared and transformed for analytical use before being modeled in Power BI.
+---
+
+## Data Audit & Quality
+
+Before transformation, all **9 source tables** were audited for:
+
+* Row counts and table grain
+* Keys and cardinality
+* Missing values
+* Exact duplicates
+* Data types
+* Date validity
+* Cross-table integrity
+* Major data-quality issues
+
+Several issues were documented and carried forward deliberately rather than being blindly deleted or filled.
+
+Examples included:
+
+* Duplicate geolocation records
+* Mixed ZIP/CEP data types
+* Missing order lifecycle timestamps
+* Missing product attributes
+* Payment anomalies
+* Multiple review records for some orders
+* Untranslated product categories
+
+The audit confirmed that the core transaction relationships contained **zero unmatched/orphan records** across the major relationships tested.
 
 ---
 
 ## Data Preparation & Transformation
 
-The project involved preparing the source data for analysis by:
+The cleaned data was maintained as **separate tables rather than flattened into a single dataset**, preserving the natural grain of each source table.
 
-- Reviewing the structure and contents of the source tables
-- Cleaning and organizing the datasets
-- Preparing fields required for analysis
-- Handling data types and analytical fields
-- Creating relationships between relevant datasets
-- Preparing calculated measures for business metrics
-- Structuring the data model for Power BI reporting
+Key transformations included:
 
-The cleaned data was then used as the foundation for the dashboard analysis.
+* Standardizing identifiers and data types
+* Treating ZIP/CEP values as text identifiers
+* Preserving legitimate missing values
+* Creating an order-level review table
+* Creating delivery-performance fields
+* Creating customer order-count analysis
+* Creating repeat-customer analysis
+* Preserving source anomalies where analytical justification for deletion did not exist
+
+### Derived Analytical Fields
+
+The `Orders_Analysis` table contains:
+
+* `delivery_days`
+* `delivery_eligible_flag`
+* `late_delivery_flag`
+* `days_late`
+
+A separate customer analysis layer was also created to evaluate order frequency and repeat purchasing using `customer_unique_id`.
+
+The transformation stage passed QA checks for row counts, key integrity, data types, null handling, delivery logic, repeat-customer logic, and row multiplication.
 
 ---
 
-## Data Model & Relationships
+## Power BI Data Model
 
-The Power BI model integrates multiple Olist datasets to support analysis across customers, orders, products, sellers, payments, reviews, and delivery operations.
+The final Power BI model was deliberately built rather than relying on automatically detected relationships.
 
-Relationships were established using relevant business keys, including customer IDs, order IDs, product IDs, and seller IDs.
+The model contains **10 intentional active relationships**, including:
 
-The model includes active relationships between transactional and supporting analytical tables, enabling connected analysis across different areas of the e-commerce business.
+* Customers → Orders
+* Orders → Order Items
+* Products → Order Items
+* Sellers → Order Items
+* Orders → Payments
+* Orders → Reviews
+* Category Translation → Products
+* Customers → Customer Repeat Analysis
+* Orders ↔ Orders Analysis
+* Orders ↔ Reviews Order Level
 
-### Power BI Data Model
+The model was validated for cardinality, filter behavior, key association, and unintended many-to-many relationships before DAX development.
+
+### Data Model
 
 ![Power BI Data Model](Images/Data_Model_Relationships.png)
 
 ### Relationship Details
 
-The relationship configuration includes active one-to-many and one-to-one relationships between the analytical tables used in the model.
-
-![Relationship Details](Images/Relationship_Details.png)
+![Power BI Relationship Details](Images/Relationship_Details.png)
 
 ---
 
-## Dashboard
+## DAX & KPI Layer
 
-### 1. Executive Overview
+The DAX layer was developed after the analytical model was validated.
 
-The Executive Overview provides a high-level summary of marketplace performance.
+**16 measures** were created and validated with no DAX errors or evidence of unintended double-counting.
 
-#### Key Performance Indicators
+### Validated KPIs
 
-- Total Sales
-- Total Orders
-- Average Order Value
-- Total Payment Value
-- Total Customers
-- Repeat Customer Rate
-- Average Delivery Days
-- Late Delivery Rate
+| KPI                   |          Result |
+| --------------------- | --------------: |
+| Total Orders          |          99,441 |
+| Total Customers       |          96,096 |
+| Total Products        |          32,951 |
+| Total Sellers         |           3,095 |
+| Total Sales Value     | R$13,591,643.70 |
+| Total Freight         |  R$2,251,909.54 |
+| Total Payment Value   | R$16,008,872.12 |
+| Average Order Value   |        R$136.68 |
+| Average Delivery Days |           12.56 |
+| Late Orders           |           6,534 |
+| Late Delivery Rate    |            6.8% |
+| Average Days Late     |           10.62 |
+| Repeat Customers      |           2,997 |
+| Repeat Customer Rate  |            3.1% |
+| Average Review Score  |        4.09 / 5 |
+| Reviewed Orders       |          98,673 |
 
-#### Visual Analysis
+**Important:** Sales Value is based on `Order Items[price]` and is treated as **Sales Value/GMV**, not accounting revenue.
 
-- Sales & Orders Over Time
-- Order Delivery Status
+---
 
-This page is designed to provide a quick understanding of the overall business position before moving into detailed analysis.
+# Dashboard
+
+The final Power BI dashboard contains **three analytical pages**, following an executive → sales/customer → operations/delivery flow. Stage 6 was completed and approved after dashboard, visual, usability, and business-question QA.
+
+---
+
+## 1. Executive Overview
+
+A high-level view of marketplace performance covering:
+
+* Total Sales
+* Total Orders
+* Average Order Value
+* Total Payment Value
+* Total Customers
+* Repeat Customer Rate
+* Average Delivery Days
+* Late Delivery Rate
+* Sales & Orders Over Time
+* Overall Order Delivery Status
 
 ![Executive Overview](Images/Executive_Overview.png)
 
 ---
 
-### 2. Sales & Customer Analysis
+## 2. Sales & Customer Analysis
 
-This page focuses on commercial performance and customer behavior.
+This page focuses on commercial performance and customer experience.
 
-#### Analysis Included
+Key analyses include:
 
-- Lowest-Rated Product Categories
-- Order Distribution by Payment Type
-- Top States by Average Order Value
-- Sales & Orders by State
-- Repeat vs One-Time Customers
-- Average Review Score by Delivery Status
-- Top 10 Sellers: Sales vs Late Delivery Rate
-
-The page helps identify differences in customer behavior, state-level sales performance, product satisfaction, payment preferences, and seller performance.
+* Lowest-Rated Product Categories
+* Order Distribution by Payment Type
+* Top States by Average Order Value
+* Sales & Orders by State
+* Repeat vs One-Time Customers
+* Average Review Score by Delivery Status
+* Top 10 Sellers: Sales vs Late Delivery Rate
 
 ![Sales & Customer Analysis](Images/Sales_Customer_Analysis.png)
 
 ---
 
-### 3. Operations & Delivery Analysis
+## 3. Operations & Delivery Analysis
 
-This page focuses on logistics and delivery performance.
+This page focuses on delivery performance and operational problem areas.
 
-#### Analysis Included
+Key analyses include:
 
-- Top 10 States by Late Delivery Rate
-- Late Order Delay Severity
-- Average Delivery Days Over Time
-- Top 10 States by Late Orders
-- Top 10 States by Average Days Late
-- Order Volume vs Average Delay by State
+* Top 10 States by Late Delivery Rate
+* Late Orders by Delay Severity
+* Average Delivery Days Over Time
+* Top 10 States by Late Orders
+* Top 10 States by Average Days Late
+* Order Volume vs Average Delay by State
 
-The analysis helps identify geographic areas with higher delivery issues and examines the relationship between order volume and delivery performance.
+Late orders are grouped into:
+
+* 1–3 days
+* 4–7 days
+* 8–14 days
+* 15+ days
 
 ![Operations & Delivery Analysis](Images/Operations_Delivery_Analysis.png)
 
 ---
 
-## Key Metrics
+## Analytical Workflow
 
-The dashboard includes business metrics such as:
+```text
+Brazilian E-Commerce Dataset
+            ↓
+       Data Audit
+            ↓
+   Business Questions
+            ↓
+Data Cleaning & Transformation
+            ↓
+    Analytical Tables
+            ↓
+  Power BI Data Modeling
+            ↓
+       DAX Measures
+            ↓
+      KPI Validation
+            ↓
+   Dashboard Development
+            ↓
+ Dashboard QA & Review
+            ↓
+    Portfolio Packaging
+```
 
-| Metric | Purpose |
-|---|---|
-| Total Sales | Measures overall sales value |
-| Total Orders | Measures order volume |
-| Average Order Value | Measures average value per order |
-| Total Customers | Measures customer base size |
-| Repeat Customer Rate | Measures customer retention behavior |
-| Average Delivery Days | Measures delivery duration |
-| Late Delivery Rate | Measures the proportion of late deliveries |
-| Average Review Score | Measures customer satisfaction through reviews |
+The workflow was intentionally designed so that **business questions and metric definitions were established before dashboard construction**.
+
+---
+
+## Key Analytical Principles
+
+Several decisions were made to keep the analysis defensible:
+
+* Missing values were not automatically treated as zero.
+* Source anomalies were not deleted simply because they looked unusual.
+* Delivery metrics use eligible delivered orders with valid delivery timestamps.
+* Late delivery findings are interpreted as **associations, not causal claims**.
+* Orders without reviews are not treated as zero-star reviews.
+* Repeat purchasing uses `customer_unique_id`.
+* Seller and category performance is evaluated through separate sales, order, delivery, and review metrics rather than an arbitrary composite score.
+* Multiple review records per order were handled through an order-level average review score.
 
 ---
 
 ## Tools & Technologies
 
-- **Power BI** — Data modeling, DAX measures, dashboard development and visualization
-- **Microsoft Excel** — Data preparation and supporting analysis
-- **GitHub** — Version control and portfolio presentation
-- **DAX** — Business calculations and analytical measures
+* **Power BI** — Dashboard development, data modeling and visualization
+* **DAX** — KPI and analytical measure development
+* **Microsoft Excel** — Data preparation and transformation
+* **GitHub** — Version control and portfolio documentation
 
 ---
 
-## Project Workflow
-
-The project followed a structured analytics workflow:
+## Repository Structure
 
 ```text
-Raw Olist Dataset
-        ↓
-Data Preparation
-        ↓
-Data Cleaning & Transformation
-        ↓
-Data Modeling
-        ↓
-Calculated Measures
-        ↓
-Business Analysis
-        ↓
-Power BI Visualizations
-        ↓
-Dashboard Review & Validation
-        ↓
-Portfolio Documentation
+olist-brazilian-ecommerce-analytics/
+│
+├── Dashboard/
+│   ├── Olist_Analytics_Dashboard_Portfolio.pbix
+│   └── Olist_Analytics_Dashboard_Portfolio.pdf
+│
+├── Images/
+│   ├── Data_Model_Relationships.png
+│   ├── Relationship_Details.png
+│   ├── Executive_Overview.png
+│   ├── Sales_Customer_Analysis.png
+│   └── Operations_Delivery_Analysis.png
+│
+├── .gitattributes
+└── README.md
 ```
+
+The repository contains the final Power BI dashboard files and visual documentation required to review the project without requiring access to the original source dataset.
+
+---
+
+## Project Status
+
+**Completed & Approved**
+
+The project progressed through data auditing, business-question definition, transformation, modeling, DAX validation, dashboard design, visual QA, and GitHub portfolio packaging.
+
+The final dashboard was reviewed against the **12 approved business questions** and finalized as a three-page Power BI analytical product.
 
 ---
 
 ## Author
 
-**Abishek Ragu**  
-Aspiring Data Analyst | Power BI | SQL | Excel
+**Abishek Ragu**
 
-[GitHub Profile](https://github.com/Abishekragu)  
-[LinkedIn Profile](https://www.linkedin.com/in/rabishekragu23/)
+Data Analyst | Business Analyst
+
+[GitHub Profile](https://github.com/Abishekragu) · [LinkedIn](https://www.linkedin.com/in/rabishekragu23/)
+
+Chennai, Tamil Nadu, India
