@@ -2,6 +2,8 @@
 
 A Power BI business intelligence project analyzing the Brazilian Olist e-commerce marketplace to understand sales performance, customer behavior, product and seller performance, and delivery operations.
 
+---
+
 ## Project Overview
 
 This project was developed as a practical data analytics portfolio project using the Brazilian E-Commerce Public Dataset by Olist.
@@ -14,7 +16,7 @@ The analysis is organized into three dashboard pages:
 2. Sales & Customer Analysis
 3. Operations & Delivery Analysis
 
-The project covers the complete analytical workflow from data preparation and transformation through data modeling, measure creation, visualization, and business interpretation.
+The project covers the complete analytical workflow from data preparation and transformation through data modeling, calculated measures, visualization, and business interpretation.
 
 ---
 
@@ -44,7 +46,7 @@ The dashboard focuses on questions such as:
 
 The project uses the **Brazilian E-Commerce Public Dataset by Olist**, obtained from Kaggle.
 
-**Source:** Kaggle — Brazilian E-Commerce Public Dataset by Olist
+**Source:** [Kaggle — Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
 
 The dataset contains multiple related tables covering:
 
@@ -78,30 +80,35 @@ The cleaned data was then used as the foundation for the dashboard analysis.
 
 ---
 
-## Data Model
+## Data Model & Relationships
 
-The analysis combines multiple Olist datasets to connect different aspects of the e-commerce business, including:
+The Power BI model integrates multiple Olist datasets to support analysis across customers, orders, products, sellers, payments, reviews, and delivery operations.
 
-- Customer information
-- Order information
-- Product information
-- Seller information
-- Payment information
-- Review information
-- Delivery information
-- Product category information
+Relationships were established using relevant business keys, including customer IDs, order IDs, product IDs, and seller IDs.
 
-This structure enables analysis across sales, customers, products, sellers, payments, reviews, and delivery performance.
+The model includes active relationships between transactional and supporting analytical tables, enabling connected analysis across different areas of the e-commerce business.
+
+### Power BI Data Model
+
+![Power BI Data Model](Images/Data_Model_Relationship.png)
+
+### Relationship Details
+
+The relationship configuration includes active one-to-many and one-to-one relationships between the analytical tables used in the model.
+
+![Power BI Relationship Details](Images/Relationship_Details.png)
 
 ---
 
-# Dashboard
+## Dashboard
 
-## 1. Executive Overview
+The Power BI dashboard is organized into three analytical pages.
 
-The Executive Overview provides a high-level summary of marketplace performance.
+### 1. Executive Overview
 
-### Key Performance Indicators
+Provides a high-level summary of marketplace performance using key performance indicators and overall business trends.
+
+**Key areas include:**
 
 - Total Sales
 - Total Orders
@@ -111,21 +118,18 @@ The Executive Overview provides a high-level summary of marketplace performance.
 - Repeat Customer Rate
 - Average Delivery Days
 - Late Delivery Rate
-
-### Visual Analysis
-
 - Sales & Orders Over Time
 - Order Delivery Status
 
-This page is designed to provide a quick understanding of the overall business position before moving into detailed analysis.
+![Executive Overview](Images/Executive_Overview.png)
 
 ---
 
-## 2. Sales & Customer Analysis
+### 2. Sales & Customer Analysis
 
-This page focuses on commercial performance and customer behavior.
+Focuses on commercial performance and customer behavior.
 
-### Analysis Included
+**Analysis includes:**
 
 - Lowest-Rated Product Categories
 - Order Distribution by Payment Type
@@ -135,15 +139,15 @@ This page focuses on commercial performance and customer behavior.
 - Average Review Score by Delivery Status
 - Top 10 Sellers: Sales vs Late Delivery Rate
 
-The page helps identify differences in customer behavior, state-level sales performance, product satisfaction, payment preferences, and seller performance.
+![Sales & Customer Analysis](Images/Sales_Customer_Analysis.png)
 
 ---
 
-## 3. Operations & Delivery Analysis
+### 3. Operations & Delivery Analysis
 
-This page focuses on logistics and delivery performance.
+Focuses on logistics and delivery performance.
 
-### Analysis Included
+**Analysis includes:**
 
 - Top 10 States by Late Delivery Rate
 - Late Order Delay Severity
@@ -152,13 +156,11 @@ This page focuses on logistics and delivery performance.
 - Top 10 States by Average Days Late
 - Order Volume vs Average Delay by State
 
-The analysis helps identify geographic areas with higher delivery issues and examines the relationship between order volume and delivery performance.
+![Operations & Delivery Analysis](Images/Operations_Delivery_Analysis.png)
 
 ---
 
-# Key Metrics
-
-The dashboard includes business metrics such as:
+## Key Metrics
 
 | Metric | Purpose |
 |---|---|
@@ -173,34 +175,34 @@ The dashboard includes business metrics such as:
 
 ---
 
-# Tools & Technologies
+## Tools & Technologies
 
 - **Power BI** — Data modeling, DAX measures, dashboard development and visualization
 - **Microsoft Excel** — Data preparation and supporting analysis
-- **GitHub** — Version control and portfolio presentation
 - **DAX** — Business calculations and analytical measures
+- **GitHub** — Version control and portfolio presentation
 
 ---
 
-# Project Workflow
+## Project Workflow
 
 The project followed a structured analytics workflow:
 
 ```text
 Raw Olist Dataset
-       ↓
+        ↓
 Data Preparation
-       ↓
+        ↓
 Data Cleaning & Transformation
-       ↓
+        ↓
 Data Modeling
-       ↓
+        ↓
 Calculated Measures
-       ↓
+        ↓
 Business Analysis
-       ↓
+        ↓
 Power BI Visualizations
-       ↓
+        ↓
 Dashboard Review & Validation
-       ↓
+        ↓
 Portfolio Documentation
