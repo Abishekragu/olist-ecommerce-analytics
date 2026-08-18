@@ -96,19 +96,17 @@ The model includes active relationships between transactional and supporting ana
 
 The relationship configuration includes active one-to-many and one-to-one relationships between the analytical tables used in the model.
 
-![Power BI Relationship Details](Images/Relationship_Details.png)
+![Relationship Details](Images/Relationship_Details.png)
 
 ---
 
 ## Dashboard
 
-The Power BI dashboard is organized into three analytical pages.
-
 ### 1. Executive Overview
 
-Provides a high-level summary of marketplace performance using key performance indicators and overall business trends.
+The Executive Overview provides a high-level summary of marketplace performance.
 
-**Key areas include:**
+#### Key Performance Indicators
 
 - Total Sales
 - Total Orders
@@ -118,8 +116,13 @@ Provides a high-level summary of marketplace performance using key performance i
 - Repeat Customer Rate
 - Average Delivery Days
 - Late Delivery Rate
+
+#### Visual Analysis
+
 - Sales & Orders Over Time
 - Order Delivery Status
+
+This page is designed to provide a quick understanding of the overall business position before moving into detailed analysis.
 
 ![Executive Overview](Images/Executive_Overview.png)
 
@@ -127,9 +130,9 @@ Provides a high-level summary of marketplace performance using key performance i
 
 ### 2. Sales & Customer Analysis
 
-Focuses on commercial performance and customer behavior.
+This page focuses on commercial performance and customer behavior.
 
-**Analysis includes:**
+#### Analysis Included
 
 - Lowest-Rated Product Categories
 - Order Distribution by Payment Type
@@ -139,15 +142,17 @@ Focuses on commercial performance and customer behavior.
 - Average Review Score by Delivery Status
 - Top 10 Sellers: Sales vs Late Delivery Rate
 
+The page helps identify differences in customer behavior, state-level sales performance, product satisfaction, payment preferences, and seller performance.
+
 ![Sales & Customer Analysis](Images/Sales_Customer_Analysis.png)
 
 ---
 
 ### 3. Operations & Delivery Analysis
 
-Focuses on logistics and delivery performance.
+This page focuses on logistics and delivery performance.
 
-**Analysis includes:**
+#### Analysis Included
 
 - Top 10 States by Late Delivery Rate
 - Late Order Delay Severity
@@ -156,11 +161,15 @@ Focuses on logistics and delivery performance.
 - Top 10 States by Average Days Late
 - Order Volume vs Average Delay by State
 
+The analysis helps identify geographic areas with higher delivery issues and examines the relationship between order volume and delivery performance.
+
 ![Operations & Delivery Analysis](Images/Operations_Delivery_Analysis.png)
 
 ---
 
 ## Key Metrics
+
+The dashboard includes business metrics such as:
 
 | Metric | Purpose |
 |---|---|
@@ -179,8 +188,8 @@ Focuses on logistics and delivery performance.
 
 - **Power BI** — Data modeling, DAX measures, dashboard development and visualization
 - **Microsoft Excel** — Data preparation and supporting analysis
-- **DAX** — Business calculations and analytical measures
 - **GitHub** — Version control and portfolio presentation
+- **DAX** — Business calculations and analytical measures
 
 ---
 
@@ -206,6 +215,7 @@ Power BI Visualizations
 Dashboard Review & Validation
         ↓
 Portfolio Documentation
+```
 
 ---
 
